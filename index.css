@@ -1,0 +1,16 @@
+.movies-item {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+#nav-box img {
+    width: 17%;
+    position: absolute;
+    right: 0;
+    top: 10%;
+}
+#nav-box {
+    position: relative;
+}
+.item-content {
+    width: 50%;
+    display: inline-block;
+}

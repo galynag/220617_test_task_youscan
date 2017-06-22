@@ -1,8 +1,11 @@
+import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
-import App from './components/App'
+import MainLayout from './components/MainLayout';
 
-render(
-    <App />,
+
+
+render (
+    <MainLayout />,
     document.getElementById('root')
 );

@@ -3,13 +3,14 @@
  */
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Row, Col} from 'react-materialize';
+import {Pagination, Input, Row, Col, Preloader} from 'react-materialize';
 
-export default class App extends Component {
+
+export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            page : 1,
+            page : 2,
             search: '',
             genres : [],
             movies: [],
@@ -44,7 +45,11 @@ export default class App extends Component {
     }
     renderLoading() {
         return (
-            <div>Loading...</div>
+
+                <Col s={4}>
+                    <Preloader flashing/>
+                </Col>
+
         );
     }
     renderError() {
@@ -73,38 +78,37 @@ export default class App extends Component {
             <div>
 
                 {moviesNewArray.map(item =>
-                    <div key={item.id} className="movies-item">
+
+                        <Col xl={3} l={4} m={6} s={12} key={item.id} className="movies-item">
                         <img src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${item.poster_path}`} alt={item.title}/>
+                        <div className="item-content">
+                            <a href='#' target="_blank">{item.title}</a>
+                        </div>
+                        </Col>
 
-                        <a href='#' target="_blank">{item.title}</a>
-                        
 
-                    </div>
                 )}
             </div>
         );
-
     };
     render() {
         const {loading} = this.state;
 
         return (
-            <div>
+            <div className="container">
                 <header>
-                    <div id="logo">
-                        <img src="./img/movie_db.png" alt=""/>
-                    </div>
                     <h1>Movies</h1>
-                    <input
+                    <Input
                         type="text"
                         placeholder= "Enter text for filter"
                         value={this.state.search}
                         onChange={this.searchValue}
                     />
                 </header>
-                <div id="reclama"></div>
-
+                <Row>
                 { loading ? this.renderLoading() : this.renderPosts()}
+                </Row>
+                <Pagination items={10} activePage={2} maxButtons={8}/>
             </div>
         );
     }
