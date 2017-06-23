@@ -11,7 +11,6 @@ export default class MainLayout extends Component {
         return(
             <div>
                 <NavPanel />
-                <Home />
                 <main className="container">
                     {this.props.children}
                 </main>
