@@ -1,4 +1,7 @@
 var path = require('path');
+var devFlagPlugin = new webpack.DefinePlugin({
+    __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
 
 module.exports = {
     entry: "./app/app.js",
@@ -14,5 +17,10 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin(),
+        devFlagPlugin
+    ]
 }
