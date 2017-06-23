@@ -7,14 +7,16 @@ import MainLayout from './components/MainLayout';
 import Home from './components/Home';
 import Contacts from './components/Contacts';
 import UserFavoriteList from './components/UserFavoriteList';
-
+import MoviesItem from './components/MoviesItem';
 
 export default (
     <Router history={browserHistory}>
         <Route component={MainLayout}>
-            <Route path="/" >
-                <IndexRoute component={Home} />
+            <Route path="/" component={Home} />
+            <Route path="movie/:id" >
+                <IndexRoute component={MoviesItem} />
             </Route>
+
             <Route path="favorite" >
                 <IndexRoute component={UserFavoriteList} />
             </Route>

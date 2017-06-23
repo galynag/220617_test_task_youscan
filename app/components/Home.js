@@ -4,6 +4,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Pagination, Input, Row, Col, Preloader, Icon} from 'react-materialize';
+import {Link} from 'react-router';
+
 
 
 export default class Home extends Component {
@@ -11,6 +13,7 @@ export default class Home extends Component {
         super(props);
         this.state = {
             page : 2,
+            activeId : 0,
             search: '',
             genres : [],
             movies: [],
@@ -25,7 +28,7 @@ export default class Home extends Component {
                 this.setState({
                     genres : res.data.genres,
                 });
-                console.log(this.state.genres);
+                // console.log(this.state.genres);
             });
         axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=685240b750268877f01b68a97137f247&language=en-US&page=${this.state.page}`)
             .then(res => {
@@ -34,7 +37,7 @@ export default class Home extends Component {
                     loading: false,
                     error: null
                 });
-                console.log(this.state.movies);
+                // console.log(this.state.movies);
                 const {movies,genres} = this.state;
                 for (let i=0;i<movies.length; i++) {
                     for (let n=0; n<movies[i].genre_ids.length; n++) {
@@ -42,9 +45,9 @@ export default class Home extends Component {
                             if (movies[i].genre_ids[n]==genres[index].id) movies[i].genre_ids[n]=genres[index].name
                         }
                     }
-                    console.log(movies[i].genre_ids);
+                    // console.log(movies[i].genre_ids);
                 }
-                console.log(this.state.movies);
+                // console.log(this.state.movies);
             })
             .catch(err => {
                     this.setState({
@@ -52,20 +55,23 @@ export default class Home extends Component {
                         error: err
                     });
                 });
-    }
+    };
     renderLoading () {
         return (
                 <Col s={4}>
                     <Preloader flashing/>
                 </Col>
         );
-    }
+    };
     renderError() {
         return(
             <div>Something went wrong {this.state.error.message}</div>
         );
-    }
-
+    };
+    // addActiveId = (e)=>{
+    //     console.log(e.target.key, );
+    //     this.setState({activeId: e.target.key})
+    // };
     renderSearch = () => {
         const { error, movies } = this.state;
         let moviesNewArray = movies.filter(item =>{
@@ -81,14 +87,17 @@ export default class Home extends Component {
         return (
                 moviesNewArray.map(item =>
                         <Col xl={3} l={4} m={6} s={12} key={item.id} className="movies-item">
-                        <img src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${item.poster_path}`} alt={item.title}/>
-                        <div className="item-content">
-                            <p>{item.vote_average} <Icon small right>star</Icon></p>
-                            <a href='#' target="_blank">{item.title}</a>
-                            <p>Release date: {item.release_date}</p>
-                            <p>Genres: {item.genre_ids.join(', ')}</p>
-                            <p>{item.overview}</p>
-                        </div>
+                            <Link to={`/movie/${item.id}`}>
+                                <img src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${item.poster_path}`} alt={item.title}/>
+
+                                    <p>{item.vote_average} <Icon small right>star</Icon></p>
+                                    <a href='#' target="_blank">{item.title}</a>
+                                    <p>Release date: {item.release_date}</p>
+                                    <p>Genres: {item.genre_ids.join(', ')}</p>
+                                    <p>{item.overview}</p>
+
+
+                            </Link>
                         </Col>
                 )
         );
@@ -98,7 +107,7 @@ export default class Home extends Component {
     };
     render() {
         const {loading} = this.state;
-
+        console.log('render',this.state.activeId);
         return (
             <div className="container">
                 <header>
@@ -114,6 +123,7 @@ export default class Home extends Component {
                 { loading ? this.renderLoading() : this.renderSearch()}
                 </Row>
                 <Pagination items={10} activePage={2} maxButtons={8}/>
+
             </div>
         );
     }
