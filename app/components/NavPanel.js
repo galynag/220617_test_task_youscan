@@ -14,9 +14,9 @@ export default class NavPanel extends Component {
                     <div className="container" id="nav-box">
                             <img src="./img/movie_db.png" alt=""/>
                         <Navbar href="#"  className="#212121 grey darken-4" left>
-                            <NavItem href="#"><Link to="/">Home</Link></NavItem>
-                            <NavItem href="#"><Link to="/favorite">My Favorite</Link></NavItem>
-                            <NavItem href="#"><Link to="/contacts">Contacts</Link></NavItem>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/favorite">My Favorite</Link></li>
+                            <li><Link to="/contacts">Contacts</Link></li>
 
                         </Navbar>
                     </div>

@@ -12,9 +12,9 @@ export default class MainLayout extends Component {
             <div>
                 <NavPanel />
                 <Home />
-                {/*<main className="container">*/}
-                    {/*{this.props.children}*/}
-                {/*</main>*/}
+                <main className="container">
+                    {this.props.children}
+                </main>
                 <FooterPanel />
             </div>
         )
