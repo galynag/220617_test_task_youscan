@@ -1,11 +1,8 @@
-import 'babel-polyfill';
 import React from 'react';
 import {render} from 'react-dom';
-import MainLayout from './components/MainLayout';
-
-
+import Router from './router';
 
 render (
-    <MainLayout />,
+    Router,
     document.getElementById('root')
 );

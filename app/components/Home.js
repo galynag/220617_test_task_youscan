@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Pagination, Input, Row, Col, Preloader} from 'react-materialize';
+import {Pagination, Input, Row, Col, Preloader, Icon} from 'react-materialize';
 
 
 export default class Home extends Component {
@@ -19,7 +19,7 @@ export default class Home extends Component {
         };
     };
 
-    componentDidMount() {
+    componentWillMount() {
         axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=685240b750268877f01b68a97137f247&language=en-US')
             .then(res => {
                 this.setState({
@@ -35,21 +35,29 @@ export default class Home extends Component {
                     error: null
                 });
                 console.log(this.state.movies);
+                const {movies,genres} = this.state;
+                for (let i=0;i<movies.length; i++) {
+                    for (let n=0; n<movies[i].genre_ids.length; n++) {
+                        for (let index=0; index<genres.length; index++){
+                            if (movies[i].genre_ids[n]==genres[index].id) movies[i].genre_ids[n]=genres[index].name
+                        }
+                    }
+                    console.log(movies[i].genre_ids);
+                }
+                console.log(this.state.movies);
             })
-    .catch(err => {
-            this.setState({
-                loading: false,
-                error: err
-            });
-        });
+            .catch(err => {
+                    this.setState({
+                        loading: false,
+                        error: err
+                    });
+                });
     }
-    renderLoading() {
+    renderLoading () {
         return (
-
                 <Col s={4}>
                     <Preloader flashing/>
                 </Col>
-
         );
     }
     renderError() {
@@ -57,10 +65,8 @@ export default class Home extends Component {
             <div>Something went wrong {this.state.error.message}</div>
         );
     }
-    // searchValue = (e) => {
-    //     this.setState({search : e.target.value})
-    // };
-    renderPosts() {
+
+    renderSearch = () => {
         const { error, movies } = this.state;
         let moviesNewArray = movies.filter(item =>{
             let input2 = this.state.search.toLowerCase();
@@ -69,27 +75,26 @@ export default class Home extends Component {
                 return true
             }
         });
-
         if(error) {
             return this.renderError;
         }
-
         return (
-            <div>
-
-                {moviesNewArray.map(item =>
-
+                moviesNewArray.map(item =>
                         <Col xl={3} l={4} m={6} s={12} key={item.id} className="movies-item">
                         <img src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${item.poster_path}`} alt={item.title}/>
                         <div className="item-content">
+                            <p>{item.vote_average} <Icon small right>star</Icon></p>
                             <a href='#' target="_blank">{item.title}</a>
+                            <p>Release date: {item.release_date}</p>
+                            <p>Genres: {item.genre_ids.join(', ')}</p>
+                            <p>{item.overview}</p>
                         </div>
                         </Col>
-
-
-                )}
-            </div>
+                )
         );
+    };
+    searchValue = (e) => {
+        this.setState({search : e.target.value})
     };
     render() {
         const {loading} = this.state;
@@ -106,7 +111,7 @@ export default class Home extends Component {
                     />
                 </header>
                 <Row>
-                { loading ? this.renderLoading() : this.renderPosts()}
+                { loading ? this.renderLoading() : this.renderSearch()}
                 </Row>
                 <Pagination items={10} activePage={2} maxButtons={8}/>
             </div>

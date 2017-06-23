@@ -11,7 +11,6 @@ export default (
     <Router history={browserHistory}>
         <Route component={MainLayout}>
             <Route path="/" component={Home} />
-
         </Route>
     </Router>
 );

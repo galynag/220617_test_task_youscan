@@ -1,18 +1,18 @@
+var path = require('path');
+
 module.exports = {
-  entry: './index',
-  output: {
-    filename: 'browser-bundle.js'
-  },
-  devtool: 'source-map',
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
-        }
-      },
-    ]
-  }
-};
+    entry: "./app/app.js",
+    output: {
+        filename: "public/js/bundle.js",
+        sourceMapFilename: "public/js/bundle.map"
+    },
+    devtool: '#source-map',
+    module: {
+        loaders: [
+            {
+                loader: 'babel',
+                exclude: /node_modules/
+            }
+        ]
+    }
+}
