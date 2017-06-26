@@ -5,8 +5,10 @@ import omit from 'lodash/object/omit';
 
 
 const initialState = {
-    selectedMovie: 58,
-    favoriteMovies: []
+    selectedMovie: 58,//тестовый...===activeId
+    favoriteMovies: [],//что должно передаваться в LocalStorage
+    page : 2,//какую страницу нужно грузить
+    activeId : 0,//ид фильма о котором нужно отобразить подробную информацию
 }
 export default function movies(state = initialState, action) {
     switch (action.type) {

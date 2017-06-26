@@ -16,16 +16,16 @@ export default class MoviesItem extends Component {
         }
 
 };
-    componentDidMount()
-{
-    axios.get(`https://api.themoviedb.org/3/movie/${this.state.movieid}?api_key=685240b750268877f01b68a97137f247&language=en-US`)
+    componentDidMount() {
+        console.log(this.props.selectedItem);
+    axios.get(`https://api.themoviedb.org/3/movie/${this.props.selectedItem}?api_key=685240b750268877f01b68a97137f247&language=en-US`)
         .then(res => {
             this.setState({
                 details: res.data,
             });
             // console.log(this.state.genres);
         });
-    axios.get(`https://api.themoviedb.org/3/movie/${this.state.movieid}/videos?api_key=685240b750268877f01b68a97137f247&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/movie/${this.props.selectedItem}/videos?api_key=685240b750268877f01b68a97137f247&language=en-US`)
         .then(res => {
             this.setState({
                 video: res.data.results[0].key,

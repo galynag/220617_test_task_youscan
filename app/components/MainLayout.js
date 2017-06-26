@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import NavPanel from './NavPanel';
 import FooterPanel from './FooterPanel';
-import Home from './Home';
+
 
 export default class MainLayout extends Component {
     render() {
